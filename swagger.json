@@ -1,0 +1,244 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "A sample API to save or search products",
+    "version": "1.0.0",
+    "title": "Swagger Product",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "name": "Esther Cecim",
+      "email": "tehsc2@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "virtserver.swaggerhub.com",
+  "basePath": "/tehsc2/ProductAPI/1.0.0",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/product": {
+      "get": {
+        "description": "Return the product by id",
+        "operationId": "findPets",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "product id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "product response",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "404": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a new product, only name is required",
+        "operationId": "addPet",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "ProductRequest",
+            "description": "Product to add",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "product response",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
+          "400": {
+            "description": "invalid fields",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Update the product name",
+        "operationId": "updateProductName",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "ProductRequest",
+            "description": "Product to add",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ProductUpdate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "product response",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "404": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete product by id",
+        "operationId": "deletePets",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "product id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "product response",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "404": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/products": {
+      "get": {
+        "description": "Returns a list of products ordered by name",
+        "operationId": "find All products by name or not",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "product name",
+            "required": false,
+            "type": "string",
+            "format": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "product response",
+            "schema": {
+              "$ref": "#/definitions/ProductList"
+            }
+          },
+          "404": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ProductList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Product"
+      }
+    },
+    "ProductUpdate": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Product"
+        },
+        {
+          "required": [
+            "id",
+            "name"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "id": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "brand": {
+              "type": "string"
+            },
+            "price": {
+              "type": "number"
+            }
+          }
+        }
+      ]
+    },
+    "Product": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Product"
+        },
+        {
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "id": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "brand": {
+              "type": "string"
+            },
+            "price": {
+              "type": "number"
+            }
+          }
+        }
+      ]
+    },
+    "Error": {
+      "type": "string"
+    }
+  }
+}

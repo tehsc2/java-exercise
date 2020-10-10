@@ -25,9 +25,6 @@ public class ProductCassandraEntity {
     }
 
     public void setId(UUID id) {
-        if (id == null) {
-            id = UUID.randomUUID();
-        }
         this.id = id;
     }
 

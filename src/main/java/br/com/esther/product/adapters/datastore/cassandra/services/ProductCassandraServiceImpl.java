@@ -44,6 +44,9 @@ public class ProductCassandraServiceImpl implements ProductPort {
 
     @Override
     public ProductAdapterEntity saveProduct(ProductAdapterEntity product) {
+        if (product.getId() == null){
+            product.setId(UUID.randomUUID());
+        }
         return mapper.map(repository.save(mapper.map(product)));
     }
 }

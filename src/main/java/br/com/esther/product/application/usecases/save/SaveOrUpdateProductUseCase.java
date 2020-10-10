@@ -35,8 +35,8 @@ public class SaveOrUpdateProductUseCase {
 
     public ProductResponse executeOnlyNameUpdate(ProductRequest productRequest) {
         Optional.ofNullable(productRequest)
-                .filter(p -> p.getId() != null)
-                .orElseThrow(() -> new InvalidFieldException("Field ID is required"));
+                .filter(p -> p.getId() != null && p.getName() != null && !p.getName().isEmpty())
+                .orElseThrow(() -> new InvalidFieldException("Field ID and NAME is required"));
 
         return productDTOMapper.map(useCase.updateProductName(productRequest.getId(), productRequest.getName()));
     }

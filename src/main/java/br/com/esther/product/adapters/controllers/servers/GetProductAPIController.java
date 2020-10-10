@@ -1,30 +1,44 @@
 package br.com.esther.product.adapters.controllers.servers;
 
 import br.com.esther.product.adapters.controllers.entities.ProductResponse;
+import br.com.esther.product.adapters.datastore.exceptions.ProductNotFoundException;
+import br.com.esther.product.application.usecases.find.FilterProductUseCase;
+import br.com.esther.product.domain.exceptions.InvalidFieldException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
+@CrossOrigin("*")
 public class GetProductAPIController {
 
-    private static final Log LOGGER = LogFactory.getLog(SaveProductAPIController.class);
+    private static final Log LOGGER = LogFactory.getLog(GetProductAPIController.class);
+    private final FilterProductUseCase filterProductUseCase;
+
+    public GetProductAPIController(FilterProductUseCase filterProductUseCase) {
+        this.filterProductUseCase = filterProductUseCase;
+    }
 
     @GetMapping(value = "products")
-    public ResponseEntity<ProductResponse> getProducts(
-            @RequestParam(value = "name", required = false) String name
-    ){
-        LOGGER.info("Get products order by name");
+    public ResponseEntity<Object> getProducts(
+            @RequestParam(value = "name", required = false) String name) {
+        try{
+            LOGGER.info("Getting products...");
 
-        return new ResponseEntity<>(HttpStatus.OK);
+            return ResponseEntity.ok(filterProductUseCase.findBy(name));
+        }catch (InvalidFieldException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }catch (ProductNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 
     @GetMapping(value = "product/{id_product}")
-    public ResponseEntity<ProductResponse> getProductById(){
+    public ResponseEntity<ProductResponse> getProductById(@PathVariable("id_product") UUID id) {
         LOGGER.info("Get product by id");
 
         return new ResponseEntity<>(HttpStatus.OK);

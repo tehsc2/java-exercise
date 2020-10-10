@@ -82,7 +82,7 @@ public class Product {
         }
 
         public ProductBuilder name(String name) {
-            this.name = Optional.ofNullable(name).filter(n -> !n.trim().isEmpty()).orElseThrow(() -> new InvalidFieldException("Field name is required"));
+            this.name = name;
             return this;
         }
 

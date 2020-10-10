@@ -1,6 +1,9 @@
-package br.com.esther.product.application.usecases;
+package br.com.esther.product.application.usecases.save;
 
 import br.com.esther.product.adapters.controllers.entities.ProductRequest;
+import br.com.esther.product.adapters.controllers.entities.ProductResponse;
+import br.com.esther.product.application.mapper.ProductDTOMapper;
+import br.com.esther.product.application.usecases.SaveProductUseCase;
 import br.com.esther.product.domain.entities.Product;
 import br.com.esther.product.domain.exceptions.InvalidFieldException;
 import org.junit.Test;
@@ -21,7 +24,10 @@ import static org.mockito.Mockito.when;
 public class SaveProductCompleteUseCaseTest {
 
     @InjectMocks
-    SaveProductCompleteUseCase saveProductCompleteUseCase;
+    SaveOrUpdateProductUseCase saveProductCompleteUseCase;
+
+    @Mock
+    ProductDTOMapper productMapper;
 
     @Mock
     SaveProductUseCase saveProductUseCase;
@@ -31,8 +37,14 @@ public class SaveProductCompleteUseCaseTest {
         ProductRequest productRequest = new ProductRequest();
         productRequest.setName("Product x");
 
+        UUID id = UUID.randomUUID();
+        when(productMapper.map(any(Product.class))).thenReturn(ProductResponse.builder()
+                .id(id)
+                .name(productRequest.getName())
+                .build());
+
         when(saveProductUseCase.saveProduct(any())).thenReturn(Product.builder()
-                .id(UUID.randomUUID())
+                .id(id)
                 .name(productRequest.getName())
                 .build());
 
@@ -59,6 +71,11 @@ public class SaveProductCompleteUseCaseTest {
         ProductRequest productRequest = new ProductRequest();
         productRequest.setId(UUID.randomUUID());
         productRequest.setName("Product x");
+
+        when(productMapper.map(any(Product.class))).thenReturn(ProductResponse.builder()
+                .id(productRequest.getId())
+                .name(productRequest.getName())
+                .build());
 
         when(saveProductUseCase.updateProductName(productRequest.getId(), productRequest.getName())).thenReturn(Product.builder()
                 .id(productRequest.getId())

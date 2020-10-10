@@ -13,6 +13,7 @@ public class ProductCassandraEntity {
     public static final String TABLE_NAME = "product";
 
     @PrimaryKeyColumn(name = "id", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
+    @Id
     private UUID id;
     private String name;
     private String description;

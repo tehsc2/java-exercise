@@ -38,9 +38,15 @@ public class GetProductAPIController {
     }
 
     @GetMapping(value = "product/{id_product}")
-    public ResponseEntity<ProductResponse> getProductById(@PathVariable("id_product") UUID id) {
-        LOGGER.info("Get product by id");
+    public ResponseEntity<Object> getProductById(@PathVariable("id_product") UUID id) {
+        try{
+            LOGGER.info("Getting product by id...");
 
-        return new ResponseEntity<>(HttpStatus.OK);
+            return ResponseEntity.ok(filterProductUseCase.findById(id));
+        }catch (InvalidFieldException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }catch (ProductNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 }

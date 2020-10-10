@@ -1,6 +1,5 @@
 package br.com.esther.product.application.usecases.find;
 
-import br.com.esther.product.adapters.datastore.exceptions.ProductNotFoundException;
 import br.com.esther.product.adapters.datastore.ports.ProductPort;
 import br.com.esther.product.application.mapper.ProductMapper;
 import br.com.esther.product.application.usecases.FindProductUseCase;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -33,6 +31,6 @@ public class FindProductUseCaseImpl implements FindProductUseCase {
 
     @Override
     public Product findById(UUID id) {
-        return null;
+        return productMapper.map(productPort.findByProductId(id));
     }
 }

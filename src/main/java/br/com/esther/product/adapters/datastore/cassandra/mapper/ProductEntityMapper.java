@@ -2,16 +2,17 @@ package br.com.esther.product.adapters.datastore.cassandra.mapper;
 
 import br.com.esther.product.adapters.datastore.cassandra.entities.ProductCassandraEntity;
 import br.com.esther.product.adapters.datastore.ports.ProductAdapterEntity;
+import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValueCheckStrategy;
 
 @Mapper(
         componentModel = "spring",
-        nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS
+        nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
+        injectionStrategy = InjectionStrategy.CONSTRUCTOR
 )
-public abstract class ProductEntityMapper {
+public interface ProductEntityMapper {
+    ProductAdapterEntity map(ProductCassandraEntity productEntity);
 
-    public abstract ProductAdapterEntity map(ProductCassandraEntity productEntity);
-
-    public abstract ProductCassandraEntity map(ProductAdapterEntity product);
+    ProductCassandraEntity map(ProductAdapterEntity product);
 }

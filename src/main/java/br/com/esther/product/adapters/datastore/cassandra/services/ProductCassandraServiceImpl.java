@@ -2,12 +2,15 @@ package br.com.esther.product.adapters.datastore.cassandra.services;
 
 import br.com.esther.product.adapters.datastore.cassandra.mapper.ProductEntityMapper;
 import br.com.esther.product.adapters.datastore.cassandra.repositories.ProductCassandraRepository;
+import br.com.esther.product.adapters.datastore.exceptions.ProductNotFoundException;
 import br.com.esther.product.adapters.datastore.ports.ProductAdapterEntity;
 import br.com.esther.product.adapters.datastore.ports.ProductPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ProductCassandraServiceImpl implements ProductPort {
@@ -23,13 +26,13 @@ public class ProductCassandraServiceImpl implements ProductPort {
     }
 
     @Override
-    public ProductAdapterEntity findByProductId(Long id) {
-        return null;
+    public ProductAdapterEntity findByProductId(UUID id) {
+        return mapper.map(repository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("Product " + id.toString() + " not found")));
     }
 
     @Override
     public ProductAdapterEntity saveProduct(ProductAdapterEntity product) {
-        //TODO: try catch
         return mapper.map(repository.save(mapper.map(product)));
     }
 }

@@ -8,6 +8,8 @@ import br.com.esther.product.domain.entities.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 public class SaveProductUseCaseImpl implements SaveProductUseCase {
 
@@ -28,9 +30,12 @@ public class SaveProductUseCaseImpl implements SaveProductUseCase {
     }
 
     @Override
-    public void updateProductName(Long id, String newName) {
+    public Product updateProductName(UUID id, String newName) {
         ProductAdapterEntity product = productPort.findByProductId(id);
+        
         product.setName(newName);
-        productPort.saveProduct(product);
+
+        return productMapper.map(
+                productPort.saveProduct(product));
     }
 }

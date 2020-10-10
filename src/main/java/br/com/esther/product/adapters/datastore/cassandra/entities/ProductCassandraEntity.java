@@ -12,8 +12,9 @@ import java.util.UUID;
 public class ProductCassandraEntity {
     public static final String TABLE_NAME = "product";
 
-    @PrimaryKeyColumn(type = PrimaryKeyType.PARTITIONED)
-    private UUID id = UUID.randomUUID();
+    @PrimaryKeyColumn(name = "id", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
+    @Id
+    private UUID id;
     private String name;
     private String description;
     private String brand;
@@ -24,6 +25,9 @@ public class ProductCassandraEntity {
     }
 
     public void setId(UUID id) {
+        if (id == null) {
+            id = UUID.randomUUID();
+        }
         this.id = id;
     }
 

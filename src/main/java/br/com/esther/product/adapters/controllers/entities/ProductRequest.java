@@ -1,9 +1,10 @@
 package br.com.esther.product.adapters.controllers.entities;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 public class ProductRequest {
-    private Long id;
+    private UUID id;
     private String name;
     private String description;
     private String brand;
@@ -12,7 +13,7 @@ public class ProductRequest {
     public ProductRequest() {
     }
 
-    public Long getId() {
+    public UUID getId() {
         return this.id;
     }
 
@@ -32,7 +33,7 @@ public class ProductRequest {
         return this.price;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

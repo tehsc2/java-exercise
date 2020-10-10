@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import static org.junit.Assert.assertNotNull;
@@ -35,14 +36,14 @@ public class SaveProductCompleteUseCaseTest {
                 .name(productRequest.getName())
                 .build());
 
-        assertNotNull(saveProductCompleteUseCase.execute(productRequest));
+        assertNotNull(saveProductCompleteUseCase.executeCompleteSave(productRequest));
     }
 
     @Test(expected = InvalidFieldException.class)
     public void test_when_product_name_is_null() {
         ProductRequest productRequest = new ProductRequest();
 
-        saveProductCompleteUseCase.execute(productRequest);
+        saveProductCompleteUseCase.executeCompleteSave(productRequest);
     }
 
     @Test(expected = InvalidFieldException.class)
@@ -50,6 +51,32 @@ public class SaveProductCompleteUseCaseTest {
         ProductRequest productRequest = new ProductRequest();
         productRequest.setName("");
 
-        saveProductCompleteUseCase.execute(productRequest);
+        saveProductCompleteUseCase.executeCompleteSave(productRequest);
+    }
+
+    @Test
+    public void test_success_when_update_name() {
+        ProductRequest productRequest = new ProductRequest();
+        productRequest.setId(UUID.randomUUID());
+        productRequest.setName("Product x");
+
+        when(saveProductUseCase.updateProductName(productRequest.getId(), productRequest.getName())).thenReturn(Product.builder()
+                .id(productRequest.getId())
+                .name(productRequest.getName())
+                .price(BigDecimal.valueOf(10))
+                .description("XXX")
+                .brand("Esther")
+                .build());
+
+        assertNotNull(saveProductCompleteUseCase.executeOnlyNameUpdate(productRequest));
+    }
+
+    @Test(expected = InvalidFieldException.class)
+    public void test_failed_null_id_when_update_name() {
+        ProductRequest productRequest = new ProductRequest();
+        productRequest.setId(null);
+        productRequest.setName("Product x");
+
+        saveProductCompleteUseCase.executeOnlyNameUpdate(productRequest);
     }
 }

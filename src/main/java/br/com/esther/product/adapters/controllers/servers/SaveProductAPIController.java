@@ -1,12 +1,10 @@
 package br.com.esther.product.adapters.controllers.servers;
 
 import br.com.esther.product.adapters.controllers.entities.ProductRequest;
-import br.com.esther.product.adapters.controllers.entities.ProductResponse;
 import br.com.esther.product.application.usecases.SaveProductCompleteUseCase;
 import br.com.esther.product.domain.exceptions.InvalidFieldException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,18 +21,22 @@ public class SaveProductAPIController {
 
     @PostMapping(value = "product")
     public ResponseEntity<Object> saveProduct(@RequestBody ProductRequest productRequest) {
-        LOGGER.info("Save a product and return the product with id");
         try{
-            return ResponseEntity.ok(saveProductCompleteUseCase.execute(productRequest));
+            LOGGER.info("Request Received");
+            return ResponseEntity.ok(saveProductCompleteUseCase.executeCompleteSave(productRequest));
         }catch (InvalidFieldException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    @PutMapping(value = "product/{id_product}")
-    public ResponseEntity<ProductResponse> updateProductName() {
-        LOGGER.info("Save a product and return the product with id");
+    @PutMapping(value = "product")
+    public ResponseEntity<Object> updateProductName(@RequestBody ProductRequest productRequest) {
+        try{
+            LOGGER.info("Request Received");
 
-        return new ResponseEntity<>(HttpStatus.OK);
+            return ResponseEntity.ok(saveProductCompleteUseCase.executeOnlyNameUpdate(productRequest));
+        }catch (InvalidFieldException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

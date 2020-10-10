@@ -30,7 +30,7 @@ public class SaveProductUseCaseImplTest {
     ProductPort productPort;
 
     @Test
-    public void saveProduct() {
+    public void test_when_save_product() {
         Product product = Product.builder()
                 .name("Product x")
                 .brand("Esther")
@@ -53,5 +53,34 @@ public class SaveProductUseCaseImplTest {
         when(productMapper.map(productAdapterEntity)).thenReturn(product);
 
         assertNotNull(saveProductUseCase.saveProduct(product));
+    }
+
+    @Test
+    public void test_when_update_product(){
+        Product product = Product.builder()
+                .id(UUID.randomUUID())
+                .name("Product x")
+                .brand("Esther")
+                .description("Nothing")
+                .price(new BigDecimal(10.0))
+                .build();
+
+        ProductAdapterEntity productAdapterEntity = ProductAdapterEntity.builder()
+                .id(product.getId())
+                .name(product.getName())
+                .description(product.getDescription())
+                .brand(product.getBrand())
+                .price(product.getPrice())
+                .build();
+
+        saveProductUseCase = new SaveProductUseCaseImpl(productPort, productMapper);
+
+        when(productPort.findByProductId(product.getId())).thenReturn(productAdapterEntity);
+
+        when(productPort.saveProduct(productAdapterEntity)).thenReturn(productAdapterEntity);
+
+        when(productMapper.map(productAdapterEntity)).thenReturn(product);
+
+        assertNotNull(saveProductUseCase.updateProductName(product.getId(), product.getName()));
     }
 }

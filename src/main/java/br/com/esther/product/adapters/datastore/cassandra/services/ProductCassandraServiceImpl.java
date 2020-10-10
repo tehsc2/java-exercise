@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductCassandraServiceImpl implements ProductPort {
@@ -22,7 +23,17 @@ public class ProductCassandraServiceImpl implements ProductPort {
 
     @Override
     public List<ProductAdapterEntity> findByProductName(String name) {
-        return null;
+        if (!name.trim().isEmpty()){
+            return Optional.ofNullable(repository.findByName(name))
+                    .filter(list -> !list.isEmpty())
+                    .orElseThrow(() -> new ProductNotFoundException("There is no products with name: " + name))
+                    .stream().map(mapper::map).collect(Collectors.toList());
+        }
+
+        return Optional.ofNullable(repository.findAll())
+                .filter(list -> !list.isEmpty())
+                .orElseThrow(() -> new ProductNotFoundException("There is no products"))
+                .stream().map(mapper::map).collect(Collectors.toList());
     }
 
     @Override

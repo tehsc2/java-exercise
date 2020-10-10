@@ -10,4 +10,6 @@ public interface ProductPort {
     ProductAdapterEntity findByProductId(UUID id);
 
     ProductAdapterEntity saveProduct(ProductAdapterEntity product);
+
+    void deleteByProductId(UUID id);
 }

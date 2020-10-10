@@ -1,6 +1,5 @@
 package br.com.esther.product.adapters.controllers.servers;
 
-import br.com.esther.product.adapters.controllers.entities.ProductResponse;
 import br.com.esther.product.adapters.datastore.exceptions.ProductNotFoundException;
 import br.com.esther.product.application.usecases.find.FilterProductUseCase;
 import br.com.esther.product.domain.exceptions.InvalidFieldException;
@@ -8,7 +7,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
@@ -37,8 +39,8 @@ public class GetProductAPIController {
         }
     }
 
-    @GetMapping(value = "product/{id_product}")
-    public ResponseEntity<Object> getProductById(@PathVariable("id_product") UUID id) {
+    @GetMapping(value = "product")
+    public ResponseEntity<Object> getProductById(@RequestParam(value = "id", required = true) UUID id) {
         try{
             LOGGER.info("Getting product by id...");
 

@@ -49,4 +49,10 @@ public class ProductCassandraServiceImpl implements ProductPort {
         }
         return mapper.map(repository.save(mapper.map(product)));
     }
+
+    @Override
+    public void deleteByProductId(UUID id) {
+        this.findByProductId(id);
+        repository.deleteById(id);
+    }
 }

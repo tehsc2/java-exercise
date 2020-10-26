@@ -1,8 +1,9 @@
 package br.com.esther.product.adapters.controllers.servers;
 
-import br.com.esther.product.adapters.datastore.exceptions.ProductNotFoundException;
-import br.com.esther.product.application.usecases.find.FilterProductUseCase;
+import br.com.esther.product.adapters.datastore.exceptions.NotFoundException;
+import br.com.esther.product.application.usecases.product.find.FilterProductUseCase;
 import br.com.esther.product.domain.exceptions.InvalidFieldException;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.http.HttpStatus;
@@ -16,14 +17,11 @@ import java.util.UUID;
 
 @RestController
 @CrossOrigin("*")
+@RequiredArgsConstructor
 public class GetProductAPIController {
 
     private static final Log LOGGER = LogFactory.getLog(GetProductAPIController.class);
     private final FilterProductUseCase filterProductUseCase;
-
-    public GetProductAPIController(FilterProductUseCase filterProductUseCase) {
-        this.filterProductUseCase = filterProductUseCase;
-    }
 
     @GetMapping(value = "products")
     public ResponseEntity<Object> getProducts(
@@ -34,7 +32,7 @@ public class GetProductAPIController {
             return ResponseEntity.ok(filterProductUseCase.findBy(name));
         }catch (InvalidFieldException e){
             return ResponseEntity.badRequest().body(e.getMessage());
-        }catch (ProductNotFoundException e){
+        }catch (NotFoundException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
@@ -47,7 +45,7 @@ public class GetProductAPIController {
             return ResponseEntity.ok(filterProductUseCase.findById(id));
         }catch (InvalidFieldException e){
             return ResponseEntity.badRequest().body(e.getMessage());
-        }catch (ProductNotFoundException e){
+        }catch (NotFoundException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }

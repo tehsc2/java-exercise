@@ -2,9 +2,9 @@ package br.com.esther.product.adapters.datastore.cassandra.services;
 
 import br.com.esther.product.adapters.datastore.cassandra.mapper.ProductEntityMapper;
 import br.com.esther.product.adapters.datastore.cassandra.repositories.ProductCassandraRepository;
-import br.com.esther.product.adapters.datastore.exceptions.ProductNotFoundException;
-import br.com.esther.product.adapters.datastore.ports.ProductAdapterEntity;
-import br.com.esther.product.adapters.datastore.ports.ProductPort;
+import br.com.esther.product.adapters.datastore.exceptions.NotFoundException;
+import br.com.esther.product.adapters.datastore.ports.product.ProductAdapterEntity;
+import br.com.esther.product.adapters.datastore.ports.product.ProductPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,20 +26,20 @@ public class ProductCassandraServiceImpl implements ProductPort {
         if (!name.trim().isEmpty()){
             return Optional.ofNullable(repository.findByName(name))
                     .filter(list -> !list.isEmpty())
-                    .orElseThrow(() -> new ProductNotFoundException("There is no products with name: " + name))
+                    .orElseThrow(() -> new NotFoundException("There is no products with name: " + name))
                     .stream().map(mapper::map).collect(Collectors.toList());
         }
 
         return Optional.ofNullable(repository.findAll())
                 .filter(list -> !list.isEmpty())
-                .orElseThrow(() -> new ProductNotFoundException("There is no products"))
+                .orElseThrow(() -> new NotFoundException("There is no products"))
                 .stream().map(mapper::map).collect(Collectors.toList());
     }
 
     @Override
     public ProductAdapterEntity findByProductId(UUID id) {
         return mapper.map(repository.findById(id)
-                .orElseThrow(() -> new ProductNotFoundException("Product " + id.toString() + " not found")));
+                .orElseThrow(() -> new NotFoundException("Product " + id.toString() + " not found")));
     }
 
     @Override

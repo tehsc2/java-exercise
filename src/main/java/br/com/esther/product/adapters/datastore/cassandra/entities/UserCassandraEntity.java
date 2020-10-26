@@ -7,23 +7,23 @@ import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.core.mapping.Table;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
-@Table(value = ProductCassandraEntity.TABLE_NAME)
+@Table(value = UserCassandraEntity.TABLE_NAME)
 @Data
-public class ProductCassandraEntity {
-    public static final String TABLE_NAME = "product";
+public class UserCassandraEntity {
+
+    public static final String TABLE_NAME = "user";
 
     @PrimaryKeyColumn(name = "id", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
     @Id
     private UUID id;
     private String name;
-    private String description;
-    private String brand;
-    private BigDecimal price;
-    private Long stock;
-    private String size;
-    private String store;
-    private BigDecimal commission;
-
+    private Long age;
+    private String phone;
+    private String address;
+    private List<String> stores;
+    private List<String> type;
+    private BigDecimal comission;
 }

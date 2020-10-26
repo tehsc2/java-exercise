@@ -1,4 +1,6 @@
-package br.com.esther.product.adapters.datastore.ports;
+package br.com.esther.product.adapters.datastore.ports.product;
+
+import br.com.esther.product.adapters.datastore.ports.product.ProductAdapterEntity;
 
 import java.util.List;
 import java.util.UUID;

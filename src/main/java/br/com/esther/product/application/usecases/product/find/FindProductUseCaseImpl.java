@@ -1,6 +1,6 @@
-package br.com.esther.product.application.usecases.find;
+package br.com.esther.product.application.usecases.product.find;
 
-import br.com.esther.product.adapters.datastore.ports.ProductPort;
+import br.com.esther.product.adapters.datastore.ports.product.ProductPort;
 import br.com.esther.product.application.mapper.ProductMapper;
 import br.com.esther.product.application.usecases.FindProductUseCase;
 import br.com.esther.product.domain.entities.Product;

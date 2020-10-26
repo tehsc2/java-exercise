@@ -1,7 +1,7 @@
 package br.com.esther.product.adapters.datastore.cassandra.mapper;
 
-import br.com.esther.product.adapters.datastore.cassandra.entities.ProductCassandraEntity;
-import br.com.esther.product.adapters.datastore.ports.product.ProductAdapterEntity;
+import br.com.esther.product.adapters.datastore.cassandra.entities.UserCassandraEntity;
+import br.com.esther.product.adapters.datastore.ports.user.UserAdapterEntity;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValueCheckStrategy;
@@ -11,8 +11,9 @@ import org.mapstruct.NullValueCheckStrategy;
         nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
         injectionStrategy = InjectionStrategy.CONSTRUCTOR
 )
-public interface ProductEntityMapper {
-    ProductAdapterEntity map(ProductCassandraEntity productEntity);
+public interface UserEntityMapper {
+    UserAdapterEntity map(UserCassandraEntity userEntity);
 
-    ProductCassandraEntity map(ProductAdapterEntity product);
+    UserCassandraEntity map(UserAdapterEntity user);
 }
+

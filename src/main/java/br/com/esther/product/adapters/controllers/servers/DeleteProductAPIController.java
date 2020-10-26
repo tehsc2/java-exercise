@@ -1,7 +1,7 @@
 package br.com.esther.product.adapters.controllers.servers;
 
-import br.com.esther.product.adapters.datastore.exceptions.ProductNotFoundException;
-import br.com.esther.product.application.usecases.delete.DeleteProductUseCase;
+import br.com.esther.product.adapters.datastore.exceptions.NotFoundException;
+import br.com.esther.product.application.usecases.product.delete.DeleteProductUseCase;
 import br.com.esther.product.domain.exceptions.InvalidFieldException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -34,7 +34,7 @@ public class DeleteProductAPIController {
             return ResponseEntity.ok().body("Deleted with success");
         }catch (InvalidFieldException e){
             return ResponseEntity.badRequest().body(e.getMessage());
-        }catch (ProductNotFoundException e){
+        }catch (NotFoundException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }catch (Exception e){
             LOGGER.error("Can't delete the product");

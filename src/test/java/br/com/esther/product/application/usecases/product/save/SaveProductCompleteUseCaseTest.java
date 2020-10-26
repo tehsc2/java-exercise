@@ -1,4 +1,4 @@
-package br.com.esther.product.application.usecases.save;
+package br.com.esther.product.application.usecases.product.save;
 
 import br.com.esther.product.adapters.controllers.entities.ProductRequest;
 import br.com.esther.product.adapters.controllers.entities.ProductResponse;

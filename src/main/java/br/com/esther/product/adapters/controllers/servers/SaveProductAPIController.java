@@ -1,8 +1,8 @@
 package br.com.esther.product.adapters.controllers.servers;
 
 import br.com.esther.product.adapters.controllers.entities.ProductRequest;
-import br.com.esther.product.adapters.datastore.exceptions.ProductNotFoundException;
-import br.com.esther.product.application.usecases.save.SaveOrUpdateProductUseCase;
+import br.com.esther.product.adapters.datastore.exceptions.NotFoundException;
+import br.com.esther.product.application.usecases.product.save.SaveOrUpdateProductUseCase;
 import br.com.esther.product.domain.exceptions.InvalidFieldException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -28,7 +28,7 @@ public class SaveProductAPIController {
             return ResponseEntity.ok(saveProductCompleteUseCase.executeCompleteSave(productRequest));
         } catch (InvalidFieldException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (ProductNotFoundException e) {
+        } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
@@ -41,7 +41,7 @@ public class SaveProductAPIController {
             return ResponseEntity.ok(saveProductCompleteUseCase.executeOnlyNameUpdate(productRequest));
         } catch (InvalidFieldException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (ProductNotFoundException e) {
+        } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }

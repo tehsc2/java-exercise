@@ -1,4 +1,4 @@
-package br.com.esther.product.application.usecases.find;
+package br.com.esther.product.application.usecases.product.find;
 
 import br.com.esther.product.adapters.controllers.entities.ProductResponse;
 import br.com.esther.product.application.mapper.ProductDTOMapper;

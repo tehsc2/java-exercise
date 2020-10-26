@@ -1,7 +1,7 @@
-package br.com.esther.product.application.usecases.save;
+package br.com.esther.product.application.usecases.product.save;
 
-import br.com.esther.product.adapters.datastore.ports.ProductAdapterEntity;
-import br.com.esther.product.adapters.datastore.ports.ProductPort;
+import br.com.esther.product.adapters.datastore.ports.product.ProductAdapterEntity;
+import br.com.esther.product.adapters.datastore.ports.product.ProductPort;
 import br.com.esther.product.application.mapper.ProductMapper;
 import br.com.esther.product.domain.entities.Product;
 import org.junit.Test;

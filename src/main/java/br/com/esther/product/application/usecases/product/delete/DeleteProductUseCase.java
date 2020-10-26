@@ -1,7 +1,6 @@
-package br.com.esther.product.application.usecases.delete;
+package br.com.esther.product.application.usecases.product.delete;
 
-import br.com.esther.product.adapters.controllers.entities.ProductResponse;
-import br.com.esther.product.adapters.datastore.ports.ProductPort;
+import br.com.esther.product.adapters.datastore.ports.product.ProductPort;
 import br.com.esther.product.application.mapper.ProductDTOMapper;
 import br.com.esther.product.application.mapper.ProductMapper;
 import org.springframework.stereotype.Component;

@@ -1,7 +1,7 @@
 package br.com.esther.product.application.mapper;
 
-import br.com.esther.product.adapters.datastore.ports.product.ProductAdapterEntity;
-import br.com.esther.product.domain.entities.Product;
+import br.com.esther.product.adapters.datastore.ports.user.UserAdapterEntity;
+import br.com.esther.product.domain.entities.User;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValueCheckStrategy;
@@ -11,10 +11,11 @@ import org.mapstruct.NullValueCheckStrategy;
         nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
         injectionStrategy = InjectionStrategy.CONSTRUCTOR
 )
-public interface ProductMapper {
+public interface UserMapper {
 
-    Product map(ProductAdapterEntity productAdapterEntity);
+    User map(UserAdapterEntity userAdapterEntity);
 
-    ProductAdapterEntity map(Product product);
+    UserAdapterEntity map(User user);
 
 }
+
